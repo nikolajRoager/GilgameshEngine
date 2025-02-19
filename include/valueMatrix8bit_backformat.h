@@ -15,7 +15,7 @@ class valueMatrix8bit_backformat
 {
 
     ///@brief 8 bit dense square matrix of AI values, although the matrix is lower-triangular this version includes all data (simplifying lookup), backformat means that the values associated with unstarted and finished counts are in the back, please open the valueMatrix8bit_backformat.h file to see a diagram
-    std::array<int8_t,32*32+33> data=
+    std::array<int8_t,32*32-14*16/*We do not store this data, as it is all 0*/+33/*Only the last row stores the 33rd column*/> data=
             //Let me try to explain the structure of the matrix in memory, and why it allows me to simplify many calculations
             //This works best if the lines are not wrapping around
             {
