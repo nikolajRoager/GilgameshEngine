@@ -133,7 +133,7 @@ std::vector<exampleState> testStates ()
 
 
 return {
-        exampleState(example0State, myValues, 36),
+        exampleState(example0State, myValues, 9),
         exampleState(example0State, fullExample, 5720),
         exampleState(example0State, ones, 106),
 };

@@ -3,7 +3,6 @@
 //
 // Version which uses 8 bit state indices for state, 8bit dense full value matrix in default format
 #include <cstdint>
-#include <tuple>
 #include "stateIndices8bit.h"
 #include "valueMatrix8bit_dense_full.h"
 #include "getValue.h"
@@ -17,23 +16,25 @@ int16_t getValue(stateIndices8bit state, valueMatrix8bit_dense_full matrix)
     int sum = 0;
 
     //Loop through the 14 indices representing the 7 pieces of either player
-    for (int i = 1; i <15; ++i) {
+    for (int i = 1; i <16; ++i) {
         //Skip the turn-marker bit
         if (i==8)
             i=9;
 
-        int index0 = state.data[i];
-        for (int j = 1; j <15; ++j) {
+
+
+        int index0 = state.data[i] + (i>8?16:0);
+        for (int j = 1; j <16; ++j) {
             //Skip the turn-marker bit
             if (j==8)
                 j=9;
 
             //Add 16, since this state index format has both players going from position 0 to 15, but t he matrix has player 1 from 16 to 31
-            int index1 = state.data[j]+16;
+            int index1 = state.data[j] + (j>8?16:0);
 
-            //<<5 is a cheaper way of multiplying with 32, don't worry about overflow,
+
             sum += matrix[index0 * 32 + index1];
         }
     }
-    return sum;
+    return static_cast<int16_t>(sum);
 }

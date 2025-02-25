@@ -1,19 +1,13 @@
-/// Test the accuracy of the algorithm supplied
+/// Test the accuracy of the algorithm supplied on all the test states
 
 #include <iostream>
-#include <chrono>
 #include "getValue.h"
 #include "testStates.h"
+#include <string>
 
 #ifndef ALGORITHM_NAME
 #warning "Please set name in CMake using add_compile_definitions"
 #define ALGORITHM_NAME unnamed
-#endif
-#ifndef REPEATS
-#define REPEATS 1000000
-#elif REPEATS<1
-#warning "Number of Repeats is illegal, using 1000000"
-#define REPEATS 1000000
 #endif
 
 //Converts a macro to a string
@@ -21,24 +15,22 @@
 #define TO_STRING(x) STRING(x)
 
  int main(int argc, char* argv[]) {
-    std::cout << "test on algorithm '" <<TO_STRING(ALGORITHM_NAME)<<"'\n";
+    std::cout << "Test algorithm algorithm '" <<TO_STRING(ALGORITHM_NAME)<<"'\n";
+
+     //this algorithm should only be used for speed test, skip it in the unit test (CMake really shouldn't built it)
+     if (std::string("constant")==TO_STRING(ALGORITHM_NAME))
+         return 0;
 
     auto examples =testStates();
-    auto start = std::chrono::high_resolution_clock::now();
 
-
-    //We will keep looping through all examples until we have enough repeats (we can safely assume REPEATS>>examples)
-    for (int i = 0; i < REPEATS;)
-        for (auto & example : examples) {
-            //Volatile hopefully prevents the compiler from optimizing away my speed test (if the execution time literally drops to 0, it has done so anyway)
-                //I don't care about the result, this is a speed test, not accuracy test
-                volatile int16_t result = getValue(example.state,example.matrix);
-                ++i;
-                if (i>REPEATS)
-                    break;
+        for (int i = 0; i < examples.size(); ++i) {
+            auto & example = examples[i];
+            int16_t result = getValue(example.state,example.matrix);
+            if (result != example.value)
+            {
+              std::cerr<<"Test state "<<i<<" failed, expected value "<<example.value<<" got "<<result<< std::endl;
+                return 1;
+            }
         }
-    auto stop= std::chrono::high_resolution_clock::now();
-    auto duration = stop-start;
-    std::cout<<"Took on average "<<(duration_cast<std::chrono::nanoseconds>(duration)/(REPEATS)).count()<<" ns";
     return 0;
 }

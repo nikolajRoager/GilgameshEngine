@@ -4,4 +4,19 @@ project(MyLibTests LANGUAGES CXX)
 
 #target_link_libraries(MyLibTests PRIVATE MyLib)
 
-#add_test(NAME MyLibTests COMMAND MyLibTests)
+
+#Generate test targets for every possible implementation of getValue
+file(GLOB getValueAlgorithms "../src/getValue/*.cpp")
+list(REMOVE_ITEM getValueAlgorithms "../src/getValue/constant.cpp")
+
+
+foreach (valueAlgorithm_file ${getValueAlgorithms})
+
+    get_filename_component(valueAlgorithm ${valueAlgorithm_file} NAME_WE)
+        add_compile_definitions(ALGORITHM_NAME=${valueAlgorithm})
+        add_executable(getValue_${valueAlgorithm}_test)
+        target_sources(getValue_${valueAlgorithm}_test PRIVATE getValueTest.cpp ${valueAlgorithm_file})
+        target_link_libraries(getValue_${valueAlgorithm}_test PRIVATE testStates)
+
+        add_test(NAME ${valueAlgorithm} COMMAND getValue_${valueAlgorithm}_test)
+endforeach ()

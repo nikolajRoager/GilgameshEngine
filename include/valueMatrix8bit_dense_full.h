@@ -53,7 +53,7 @@ class valueMatrix8bit_dense_full
 
 public:
 
-    explicit valueMatrix8bit_dense_full(std::array<int8_t, 32 * 32>&& D): data(D){};
+    explicit valueMatrix8bit_dense_full(std::array<int8_t, 32 * 32> D): data(D){};
 
     ////@brief address of the 14-16 byte (256 bit) rows which contains player0's value matrix interaction with themself, and player 1s pieces at position 1,2:
     [[nodiscard]] inline const int8_t* blockABaddress() const {
@@ -76,7 +76,7 @@ public:
     }
 
     ///@brief Simply get the data at this index
-    inline int8_t& operator[](int index)
+    inline int8_t operator[](int index)
     {
         return data[index];
     }

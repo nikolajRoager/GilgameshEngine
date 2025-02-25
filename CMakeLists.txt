@@ -1,12 +1,10 @@
 cmake_minimum_required(VERSION 3.30)
 project(GilgameshEngine)
 
-
-
 set(CMAKE_CXX_STANDARD 20)
 set(CMAKE_CXX_STANDARD_REQUIRED OFF)
 
-    include(CTest)
+include(CTest)
 
 #Ensures that dll files in windows go to the right place
 set(CMAKE_BINARY_DIR ${CMAKE_CURRENT_BINARY_DIR})
@@ -26,8 +24,7 @@ endif()
 #Get your headers from here
 include_directories(include)
 
-add_subdirectory(src)
 
 enable_testing()
-
 add_subdirectory(test)
+add_subdirectory(src)
