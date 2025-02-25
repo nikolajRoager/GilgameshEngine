@@ -8,14 +8,16 @@
 
 #include <vector>
 #include "stateIndices8bit.h"
-#include "valueMatrix8bit_backformat.h"
+#include "valueMatrix8bit_dense_3of4_backformat.h"
+#include "valueMatrix8bit_dense_full.h"
 
+///@brief A package which includes a state, and a value matrix, and the known values betwixt these, used for testing
 struct exampleState{
     stateIndices8bit state;
-    valueMatrix8bit_backformat matrix;
+    valueMatrix8bit_dense_full matrix;
     int value;
 
-    exampleState(stateIndices8bit _state, valueMatrix8bit_backformat _matrix, int _value):
+    exampleState(stateIndices8bit _state, valueMatrix8bit_dense_full _matrix, int _value):
             state(_state),
             matrix(_matrix),
             value(_value)

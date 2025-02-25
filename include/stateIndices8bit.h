@@ -18,6 +18,17 @@ struct stateIndices8bit{
     ///@brief assuming that the data is valid, returns whose turn it is
     ///@return the player whose turn it is as a boolean false= player0, true=player1
     [[nodiscard]] bool turn() const {return (data[0]&0xF0);}
+
+    ///@brief Begin iterator for my data (for range based for loops)
+    auto begin()
+    {
+        return data.begin();
+    }
+    ///@brief End iterator for my data (for range based for loops)
+    auto end()
+    {
+        return data.end();
+    }
 };
 
 #endif //GILGAMESHENGINE_STATEINDICES8BIT_H
