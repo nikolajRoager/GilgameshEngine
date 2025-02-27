@@ -12,7 +12,7 @@
 class valueMatrix8bit_dense_full
 {
     ///@brief 8 bit dense square matrix of AI values, in ordered format, where column and row i 0 to 15 correspond to player 0 having a piece at position i, i from 16 to 31 correspond to player 1 having a piece at position i-16
-    std::array<int8_t,32*32> data=
+    std::array<int8_t,32*32> myData=
             {
             //The default data below only illustrate the data structure, the matrix can NOT be default initialized
             //0's below indicate data which must be 0, 1's below indicate data which can be any 8 bit integer
@@ -53,31 +53,38 @@ class valueMatrix8bit_dense_full
 
 public:
 
-    explicit valueMatrix8bit_dense_full(std::array<int8_t, 32 * 32> D): data(D){};
+    explicit valueMatrix8bit_dense_full(std::array<int8_t, 32 * 32> D): myData(D){};
+
+    ////@brief address of the start of the data
+    [[nodiscard]] inline const void* data() const {
+        return &(myData[0]);
+    }
+    [[nodiscard]] inline auto size()const{return myData.size();}
+
 
     ////@brief address of the 14-16 byte (256 bit) rows which contains player0's value matrix interaction with themself, and player 1s pieces at position 1,2:
     [[nodiscard]] inline const int8_t* blockABaddress() const {
-        return &(data[0]);
+        return &(myData[0]);
     }
 
     ////@brief address of the 14-32 byte (512 bit) rows The first 14 bytes contain player 0's interaction with player 1, the next are player 1's interaction with itself, the final 4 are always 0
     [[nodiscard]] inline const int8_t* blockEFGHIJKLaddress() const {
-        return &(data[256]);
+        return &(myData[256]);
     }
 
     ////@brief address of the 4-32 byte (512 bit) rows.  representing the interaction with the number of started and unstarted pieces with player 0 and 1's position
     [[nodiscard]] inline const int8_t* blockMOPQLaddress() const {
-        return &(data[256]);
+        return &(myData[256]);
     }
 
     ////@brief address of the 33 byte (520 bit) row, with
     [[nodiscard]] inline const int8_t* blockRaddress() const {
-        return &(data[256]);
+        return &(myData[256]);
     }
 
     ///@brief Simply get the data at this index
     inline int8_t operator[](int index)
     {
-        return data[index];
+        return myData[index];
     }
 };

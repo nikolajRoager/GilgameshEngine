@@ -10,25 +10,26 @@
 #define ALGORITHM_NAME unnamed
 #endif
 
-//Converts a macro to a string
-#define STRING(x) #x
-#define TO_STRING(x) STRING(x)
-
  int main(int argc, char* argv[]) {
-    std::cout << "Test algorithm algorithm '" <<TO_STRING(ALGORITHM_NAME)<<"'\n";
+    std::cout << "Test algorithm algorithm '" <<algorithmDescription()<<"'\n";
 
-     //this algorithm should only be used for speed test, skip it in the unit test (CMake really shouldn't built it)
-     if (std::string("constant")==TO_STRING(ALGORITHM_NAME))
+     //this algorithm should only be used for speed test?, skip it in the unit test
+     if (ignoreOutput())
          return 0;
 
     auto examples =testStates();
 
         for (int i = 0; i < examples.size(); ++i) {
             auto & example = examples[i];
-            int16_t result = getValue(example.state,example.matrix);
+            //Convert to whatever format this implementation uses
+            void * state_ptr = loadStateWorkspace(example.state);
+            void * matrix_ptr= loadMatrixWorkspace(example.matrix);
+            int16_t result = getValue(state_ptr,matrix_ptr);
+            freeWorkspace(state_ptr,matrix_ptr);
+
             if (result != example.value)
             {
-              std::cerr<<"Test state "<<i<<" failed, expected value "<<example.value<<" got "<<result<< std::endl;
+                std::cerr<<"Test state "<<i<<" failed, expected value "<<example.value<<" got "<<result<< std::endl;
                 return 1;
             }
         }

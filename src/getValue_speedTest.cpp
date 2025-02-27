@@ -24,24 +24,20 @@
 #define TO_STRING(x) STRING(x)
 
  int main(int argc, char* argv[]) {
-    std::cout << "Speed test on algorithm '" <<TO_STRING(ALGORITHM_NAME)<<"'\n";
+    std::cout << "Speed test on algorithm '" <<algorithmDescription()<<"'\n";
 
     auto examples =testStates();
+     int cycles = REPEATS/examples.size();
     auto start = std::chrono::high_resolution_clock::now();
-
-
     //We will keep looping through all examples until we have enough repeats (we can safely assume REPEATS>>examples)
-    for (int i = 0; i < REPEATS;)
+    for (int i = 0; i < cycles ;++i)
         for (auto & example : examples) {
             //Volatile hopefully prevents the compiler from optimizing away my speed test (if the execution time literally drops to 0, it has done so anyway)
-                //I don't care about the result, this is a speed test, not accuracy test
-                volatile int16_t result = getValue(example.state,example.matrix);
-                ++i;
-                if (i>REPEATS)
-                    break;
+            //I don't care about the result, this is a speed test, not accuracy test
+            volatile int16_t result = getValue(&(example.state.data[0]), (example.matrix.data()));
         }
     auto stop= std::chrono::high_resolution_clock::now();
     auto duration = stop-start;
-    std::cout<<"Took on average "<<(duration_cast<std::chrono::nanoseconds>(duration)/(REPEATS)).count()<<" ns";
+    std::cout<<"Took on average "<<(duration_cast<std::chrono::nanoseconds>(duration)/(cycles*examples.size())).count()<<" ns";
     return 0;
 }

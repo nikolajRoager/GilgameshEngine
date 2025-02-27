@@ -8,7 +8,7 @@
 std::vector<exampleState> testStates ()
 {
     //An example mid-game
-    stateIndices8bit example0State({
+    stateIndices<int8_t> example0State({
              //The (int8_t) are there to silence compiler warnings
              (int8_t)0xF0,//Player 0 turn
              (int8_t)0x0,(int8_t)0x0,(int8_t)0x3,(int8_t)0x4,(int8_t)0xD,(int8_t)0x6,(int8_t)0xE,
