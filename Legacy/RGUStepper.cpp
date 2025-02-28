@@ -656,7 +656,7 @@ if(*reinterpret_cast<uint8_t*>(&number) != 0x1)
     //Then 7 bytes for player 0s pieces location, and 7 for player1s
     piecelist TestStatePiecelist=//128 bits
     {
-        //The (int8_t) ared there to silence compiler warnings
+        //The (int8_t) are there to silence compiler warnings
         (int8_t)0xF0,//Player 0 turn
         (int8_t)0x0,(int8_t)0x0,(int8_t)0x3,(int8_t)0x4,(int8_t)0xD,(int8_t)0x6,(int8_t)0xE,
         (int8_t)0x08,//Either 08 or 00, will be 8 if the other one has anything at 8
