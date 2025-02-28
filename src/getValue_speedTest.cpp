@@ -8,10 +8,6 @@
 #include "getValue.h"
 #include "testStates.h"
 
-#ifndef ALGORITHM_NAME
-#warning "Please set name in CMake using add_compile_definitions"
-#define ALGORITHM_NAME unnamed
-#endif
 #ifndef REPEATS
 #define REPEATS 1000000
 #elif REPEATS<1
@@ -34,7 +30,7 @@
         for (auto & example : examples) {
             //Volatile hopefully prevents the compiler from optimizing away my speed test (if the execution time literally drops to 0, it has done so anyway)
             //I don't care about the result, this is a speed test, not accuracy test
-            volatile int16_t result = getValue(&(example.state.data[0]), (example.matrix.data()));
+            volatile int result = getValue(&(example.state.data[0]), (example.matrix.data()));
         }
     auto stop= std::chrono::high_resolution_clock::now();
     auto duration = stop-start;

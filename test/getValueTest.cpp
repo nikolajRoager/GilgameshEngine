@@ -5,11 +5,6 @@
 #include "testStates.h"
 #include <string>
 
-#ifndef ALGORITHM_NAME
-#warning "Please set name in CMake using add_compile_definitions"
-#define ALGORITHM_NAME unnamed
-#endif
-
  int main(int argc, char* argv[]) {
     std::cout << "Test algorithm algorithm '" <<algorithmDescription()<<"'\n";
 
@@ -24,7 +19,7 @@
             //Convert to whatever format this implementation uses
             void * state_ptr = loadStateWorkspace(example.state);
             void * matrix_ptr= loadMatrixWorkspace(example.matrix);
-            int16_t result = getValue(state_ptr,matrix_ptr);
+            int result = getValue(state_ptr,matrix_ptr);
             freeWorkspace(state_ptr,matrix_ptr);
 
             if (result != example.value)
