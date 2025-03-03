@@ -2,12 +2,12 @@
 
 #include "stateIndices.h"
 #include <string>
-#include "valueMatrix8bit_dense_full.h"
+#include "valueMatrix_dense_full.h"
 
 ///@brief Convert the default state format to a pointer to the data-start in the format we want to use (Polymorphism is bad for performance)
 void* loadStateWorkspace(const stateIndices<int8_t> & state);
 ///@brief Convert the default matrix  format to a pointer to the data-start in the format we want to use (Polymorphism is bad for performance)
-void* loadMatrixWorkspace(const valueMatrix8bit_dense_full& matrix);
+void* loadMatrixWorkspace(const valueMatrix_dense_full<int8_t>& matrix);
 
 ///@brief Free the workspace used for this algorithm, assuming we have loaded it
 void freeWorkspace(void* stateAddress, void* matrixAddress);

@@ -8,7 +8,7 @@
 #include <string>
 #include <iostream>
 #include "stateIndices.h"
-#include "valueMatrix8bit_dense_full.h"
+#include "valueMatrix_dense_full.h"
 #include "getValue.h"
 #include "stateVector.h"
 
@@ -37,11 +37,11 @@ void* loadStateWorkspace(const stateIndices<int8_t>& state)
     return out;
 }
 ///@brief Convert the default matrix  format to a pointer to the data-start in the format we want to use (Polymorphism is bad for performance)
-void* loadMatrixWorkspace(const valueMatrix8bit_dense_full& matrix)
+void* loadMatrixWorkspace(const valueMatrix_dense_full<int8_t>& matrix)
 {
     //just copy the data and return it
-    auto out = malloc(matrix.size());
-    memcpy(out,matrix.data(),matrix.size());
+    auto out = malloc(matrix.byteSize());
+    memcpy(out,matrix.data(),matrix.byteSize());
     return out;
 }
 

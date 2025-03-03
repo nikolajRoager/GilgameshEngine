@@ -9,7 +9,6 @@ project(MyLibTests LANGUAGES CXX)
 file(GLOB getValueAlgorithms "../src/getValue/*.cpp")
 list(REMOVE_ITEM getValueAlgorithms "*constant.cpp")
 
-
 foreach (valueAlgorithm_file ${getValueAlgorithms})
 
     get_filename_component(valueAlgorithm ${valueAlgorithm_file} NAME_WE)

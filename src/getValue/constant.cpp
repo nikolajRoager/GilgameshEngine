@@ -10,7 +10,7 @@
 #include <cstring>
 #include <string>
 #include "stateIndices.h"
-#include "valueMatrix8bit_dense_full.h"
+#include "valueMatrix_dense_full.h"
 #include "getValue.h"
 
 ///@brief DOES NOT GIVE A CORRECT RESULT, LITERALLY JUST RETURNS 0, Used this as a baseline for the speed-test
@@ -23,15 +23,15 @@ void* loadStateWorkspace(const stateIndices<int8_t>& state)
 {
     //just copy the data and return it
     auto out = malloc(state.data.size());
-    memcpy(out,&state.data[0],state.data.size());
+    memcpy(out,&state.data[0],state.byteSize());
     return out;
 }
 ///@brief Convert the default matrix  format to a pointer to the data-start in the format we want to use (Polymorphism is bad for performance)
-void* loadMatrixWorkspace(const valueMatrix8bit_dense_full& matrix)
+void* loadMatrixWorkspace(const valueMatrix_dense_full<int8_t>& matrix)
 {
     //just copy the data and return it
-    auto out = malloc(matrix.size());
-    memcpy(out,matrix.data(),matrix.size());
+    auto out = malloc(matrix.byteSize());
+    memcpy(out,matrix.data(),matrix.byteSize());
     return out;
 }
 

@@ -9,15 +9,15 @@
 #include <vector>
 #include "stateIndices.h"
 #include "valueMatrix8bit_dense_3of4_backformat.h"
-#include "valueMatrix8bit_dense_full.h"
+#include "valueMatrix_dense_full.h"
 
 ///@brief A package which includes a state, and a value matrix, and the known values betwixt these, used for testing
 struct exampleState{
     stateIndices<int8_t> state;
-    valueMatrix8bit_dense_full matrix;
+    valueMatrix_dense_full<int8_t> matrix;
     int value;
 
-    exampleState(stateIndices<int8_t> _state, valueMatrix8bit_dense_full _matrix, int _value):
+    exampleState(stateIndices<int8_t> _state, valueMatrix_dense_full<int8_t> _matrix, int _value):
             state(_state),
             matrix(_matrix),
             value(_value)

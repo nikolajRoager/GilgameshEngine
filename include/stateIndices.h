@@ -16,6 +16,10 @@ struct stateIndices{
 
     explicit stateIndices(std::array<int8_t,16> _data): data(_data){}
 
+
+    ///@brief size of data in bytes
+    [[nodiscard]] inline auto byteSize()const{return data.size()*sizeof (T);}
+
     ///@brief assuming that the data is valid, returns whose turn it is
     ///@return the player whose turn it is as a boolean false= player0, true=player1
     [[nodiscard]] bool turn() const {return (data[0]&0xF0);}
