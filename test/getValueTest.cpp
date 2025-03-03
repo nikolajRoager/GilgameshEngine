@@ -6,12 +6,12 @@
 #include <string>
 #include "AVX_functions.h"
  int main(int argc, char* argv[]) {
-
+/*
      if (getAVXSupport()==0)
      {
          std::cout<<"AVX is not supported"<<std::endl;
          return 1;
-     }
+     }*/
 
 
     std::cout << "Test algorithm algorithm '" <<algorithmDescription()<<"'\n";

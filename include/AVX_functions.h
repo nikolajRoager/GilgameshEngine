@@ -12,9 +12,8 @@ inline int getAVXSupport() {
     //MSVC compiler
     int cpuInfo[4];
     __cpuid(cpuInfo, 0);
-    int nIds = cpuInfo[0];
 
-    if (nIds >= 7) {
+    if (int nIds = cpuInfo[0]; nIds >= 7) {
         __cpuid(cpuInfo, 7);
         if ((cpuInfo[1] & (1 << 16)) != 0)// Check bit 16 of EBX for AVX-512 support
             return 2;//AVX-512, we have at least 512 bits (supercedes AVX2)

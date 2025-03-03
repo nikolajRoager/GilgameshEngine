@@ -17,9 +17,12 @@ if (CMAKE_CXX_COMPILER_ID STREQUAL "GNU")
     set(CMAKE_CXX_FLAGS_RELEASE "-O3")
     set(CMAKE_CXX_FLAGS_DEBUG "-g")
     set(CMAKE_CXX_FLAGS_RELEASE  "-mavx2")
+    set(CMAKE_CXX_FLAGS_DEBUG  "-mavx2")
 elseif (CMAKE_CXX_COMPILER_ID STREQUAL "MSVC")
     set(CMAKE_CXX_FLAGS_RELEASE "/O2")
-    set(CMAKE_CXX_FLAGS_DEBUG "/Zi /Od")
+    set(CMAKE_CXX_FLAGS_DEBUG "/Zi /O2")
+    set(CMAKE_CXX_FLAGS_RELEASE  "/arch:AVX2")
+    set(CMAKE_CXX_FLAGS_DEBUG  "/arch:AVX2")
 endif()
 
 #Get your headers from here
