@@ -14,13 +14,13 @@
 #include "stateVector.h"
 #include "AVX_functions.h"
 
-///@brief the conceptually simplest AVX version use 16 bit multiplications to get a 32 bit result
+///@brief Instead of using multiplications, use a mask for all the pieces on the board (which are 0 or 1)
 int32_t getValue(const void* state_ptr,const void* matrix_ptr)
 {
     const auto* state = static_cast<const int16_t*>(state_ptr);
     const auto* matrix= static_cast<const int16_t*>(matrix_ptr);
 
-    //We will add parts of the sum as 32 bit snippets to this register, then sum it up when they are all there
+    //We will add parts of the sum as 16 bit snippets to this register, then sum it up when they are all there
     __m256i sum = _mm256_setzero_si256();//Start empty
 
 
@@ -83,7 +83,7 @@ void freeWorkspace(void* stateAddress, void* matrixAddress)
 ///@brief for displaying what algorithm we are testing
 std::string algorithmDescription()
 {
-    return "16-bit state vector, with full 16bit dense value matrix with madd AVX";
+    return "16-bit state vector, with 3 quarters 16bit dense value matrix with masks in AVX";
 }
 
 bool ignoreOutput() {return false;}

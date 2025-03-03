@@ -4,7 +4,6 @@ add_library(testStates testStates.cpp)
 # Custom target that ensures all programs are built
 add_custom_target(BuildSpeedtest)
 
-
 add_compile_definitions(REPEATS=1000000)
 #Generate targets for every possible implementation of getValue
 file(GLOB getValueAlgorithms "getValue/*.cpp")

@@ -4,6 +4,7 @@
 
 #include <cstdint>
 #include <array>
+#include "valueMatrix_dense_full.h"
 
 #ifndef GILGAMESHENGINE_MAT8BIT_H
 #define GILGAMESHENGINE_MAT8BIT_H
@@ -12,11 +13,12 @@
 
 ///@brief 8 bit dense square matrix of AI values, with the 1/4 all 0 block left out, in "counters-in-the-back" format, please open the valueMatrix8bit_dense_3of4_backformat.h file to see a diagram
 ///@brief Value matrices are from the perspective of player 0, and assumes that it is player 1s turn!
+template<typename T, typename =std::enable_if<std::is_integral_v<T>>>
 class valueMatrix8bit_dense_3of4_backformat
 {
 
     ///@brief 8 bit dense square matrix of AI values, although the matrix is lower-triangular this version includes all data (simplifying lookup), backformat means that the values associated with unstarted and finished counts are in the back, please open the valueMatrix8bit_dense_3of4_backformat.h file to see a diagram
-    std::array<int8_t,32*32-14*16/*We do not store this data, as it is all 0*/> data=
+    std::array<T,32*32-14*16/*We do not store this data, as it is all 0*/> myData=
             //The default data below only illustrate the data structure, the matrix can NOT be default initialized
             //0's below indicate data which must be 0, 1's below indicate data which can be any 8 bit integer
             //This illustration works best, if line-wrap is turned off in your editor
@@ -74,23 +76,30 @@ class valueMatrix8bit_dense_3of4_backformat
             };
 
 public:
-    ////@brief address of the 14-16 byte (256 bit) rows which contains player0's value matrix interaction with themself, and player 1s pieces at position 1,2:
-    [[nodiscard]] inline const int8_t* blockABaddress() const {
-        return &(data[0]);
+    ////@brief address of the start of the data
+    [[nodiscard]] inline const void* data() const {
+        return &(myData[0]);
+    }
+    ///@brief size of data in bytes
+    [[nodiscard]] inline auto byteSize()const{return myData.size()*sizeof (T);}
+    ///@brief Template constructor from another matrix, which we must scale up or down
+
+    template<typename U> valueMatrix8bit_dense_3of4_backformat(const valueMatrix_dense_full<U>& data)
+    {
+        myData={0};
+        //First half, skip the last half of the row
+        int j=0;
+        for (int i =0; i <data.getData().size()/2; i+=32)
+        {
+            for (int k = 0; k<16; ++k)
+                myData[j++]=static_cast<U>(data.getData()[i*32+k]);
+        }
+        for (int i = data.getData().size()/2+1; i <data.getData().size(); ++i)
+        {
+            for (int k = 0; k<32; ++k)
+                myData[j++]=static_cast<U>(data.getData()[i*32+k]);
+        }
     }
 
-    ////@brief address of the 14-32 byte (512 bit) rows The first 14 bytes contain player 0's interaction with player 1, the next are player 1's interaction with itself, the final 4 are always 0
-    [[nodiscard]] inline const int8_t* blockEFGHIJKLaddress() const {
-        return &(data[256]);
-    }
 
-    ////@brief address of the 4-32 byte (512 bit) rows.  representing the interaction with the number of started and unstarted pieces with player 0 and 1's position
-    [[nodiscard]] inline const int8_t* blockMOPQLaddress() const {
-        return &(data[256]);
-    }
-
-    ////@brief address of the 33 byte (520 bit) row, with
-    [[nodiscard]] inline const int8_t* blockRaddress() const {
-        return &(data[256]);
-    }
 };
