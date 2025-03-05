@@ -21,7 +21,7 @@ std::vector<exampleState> testStates ()
     //This matrix is actively harmful in trying to win
 
     valueMatrix_dense_full<int8_t> fullExample({
-     1,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,    0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,
+     1, 0,   0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,    0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,
      2, 17,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,    0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,
      3, 18, 32,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,    0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,
      4, 19, 33, 46,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,    0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,
@@ -135,8 +135,8 @@ std::vector<exampleState> testStates ()
 
 
 return {
-        exampleState(example0State, myValues, 9),
         exampleState(example0State, fullExample, 5720),
+        exampleState(example0State, myValues, 9),
         exampleState(example0State, ones, 106),
 };
 }

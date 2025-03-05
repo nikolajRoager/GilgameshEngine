@@ -4,6 +4,9 @@
 
 #include <cstdint>
 #include <array>
+#include <format>
+#include <sstream>
+#include <string>
 
 #pragma once
 
@@ -103,8 +106,50 @@ public:
     }
 
     ///@brief Simply get the data at this index
-    inline T operator[](int index)
+    inline T& operator[](int index)
     {
         return myData[index];
     }
+    inline const T& operator[](int index) const
+    {
+        return myData[index];
+    }
+
+
+    ///@brief convert the matrix to a string (includes 32 newline characters!)
+    [[nodiscard]] std::string toString() const {
+        std::stringstream ss;
+
+    ///@brief The format string will be evaluated at compiletime, unfortunately declaring it as a variable does not work (the compiler doesn't recognize it as a constexpr), using a define is the most readable way of getting around it
+#define printHex(ss,hex) ss<<std::format( (sizeof(T)==1 ? "{0:02x}," : (sizeof(T)==2 ? "{0:04x}," : (sizeof(T)==3 ? "{0:06x}," : "{0:08x},"))),myData[i++]);
+
+        int i=0;
+        for (int row = 0; row < 16; ++row) {
+            for (int col = 0; col < 16; ++col) {
+                printHex(ss,myData[i++]);
+            }
+            ss<<' ';
+            for (int col = 16; col < 32; ++col) {
+                printHex(ss,myData[i++]);
+            }
+            ss<<'\n';
+        }
+        ss<<'\n';
+        for (int row = 16; row < 32; ++row) {
+            for (int col = 0; col < 16; ++col) {
+                printHex(ss,myData[i++]);
+            }
+            ss<<' ';
+            for (int col = 16; col < 32; ++col) {
+                printHex(ss,myData[i++]);
+            }
+            ss<<'\n';
+        }
+        //Lets just clean it up, it was just a thing I did to make this function more readable
+#undef printHex
+
+        return ss.str();
+    }
+
+
 };

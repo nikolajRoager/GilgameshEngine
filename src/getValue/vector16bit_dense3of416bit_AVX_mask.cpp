@@ -8,6 +8,8 @@
 #include <cstring>
 #include <string>
 #include <iostream>
+#include <valueMatrix8bit_dense_3of4_backformat.h>
+
 #include "stateIndices.h"
 #include "valueMatrix_dense_full.h"
 #include "getValue.h"
@@ -17,6 +19,7 @@
 ///@brief Instead of using multiplications, use a mask for all the pieces on the board (which are 0 or 1)
 int32_t getValue(const void* state_ptr,const void* matrix_ptr)
 {
+    return 0;
     const auto* state = static_cast<const int16_t*>(state_ptr);
     const auto* matrix= static_cast<const int16_t*>(matrix_ptr);
 
@@ -68,7 +71,9 @@ void* loadStateWorkspace(const stateIndices<int8_t>& state)
 ///@brief Convert the default matrix  format to a pointer to the data-start in the format we want to use (Polymorphism is bad for performance)
 void* loadMatrixWorkspace(const valueMatrix_dense_full<int8_t>& matrix)
 {
-    auto newMatrix= valueMatrix_dense_full<int16_t>(matrix);
+    auto newMatrix= valueMatrix8bit_dense_3of4_backformat<int16_t>(matrix);
+    std::cout<<matrix.toString()<<std::endl;
+    std::cout<<newMatrix.toString()<<std::endl;
     auto out = malloc(newMatrix.byteSize());
     memcpy(out,newMatrix.data(),newMatrix.byteSize());
     return out;
