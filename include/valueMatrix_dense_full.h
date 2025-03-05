@@ -21,8 +21,6 @@ protected:
 ///@brief dense square matrix of AI values, in ordered format, where column and row i 0 to 15 correspond to player 0 having a piece at position i, i from 16 to 31 correspond to player 1 having a piece at position i-16
 std::array<T,32*32> myData=
         {
-        //The default data below only illustrate the data structure, the matrix can NOT be default initialized
-        //0's below indicate data which must be 0, 1's below indicate data which can be any 8 bit integer
 1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,  0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,//0<-0 Player 0
 1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,  0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,//0<-1
 1,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,  0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,//0<-2
@@ -63,16 +61,24 @@ public:
     {
         return myData;
     }
+    ///@brief Constructor
+    ///@warning for performance we do not check if the data is valid (has 0s in the right places), undefined behaviour may occur if the required 0s are not valid
     explicit valueMatrix_dense_full(std::array<T, 32 * 32> D): myData(D){};
 
 
-    ///@brief Template constructor from another matrix, which we must scale up or down
-    template<typename U> valueMatrix_dense_full(const valueMatrix_dense_full<U>& data)
+    ///@brief Template constructor from another matrix with same signedness, which we must scale up or down
+    ///@warning for performance we do not check if the data is valid (has 0s in the right places), undefined behaviour may occur if the required 0s are not valid
+    template<typename U,
+            typename =std::enable_if<
+                        std::is_integral_v<U>/*redundant, but I like to write it explicitly*/
+                        && std::is_signed_v<U> == std::is_signed_v<T>//Same signedness required
+                    >
+            > explicit valueMatrix_dense_full(const valueMatrix_dense_full<U>& data)
     {
-        myData={0};
         for (int i =0; i <data.getData().size(); ++i)
         {
-            myData[i]=static_cast<U>(data.getData()[i]);
+            //I just assume the other matrix has 0s at the required places
+            myData[i]=static_cast<T>(data.getData()[i]);
         }
     }
 
@@ -105,7 +111,7 @@ public:
         return &(myData[256]);
     }
 
-    ///@brief Simply get the data at this index
+    ///@brief Simply get the data at this index, modifiable (undefined behaviour if you modify a required 0)
     inline T& operator[](int index)
     {
         return myData[index];
@@ -145,11 +151,17 @@ public:
             }
             ss<<'\n';
         }
-        //Lets just clean it up, it was just a thing I did to make this function more readable
+        //Let's just clean it up, it was just a thing I did to make this function more readable
 #undef printHex
 
         return ss.str();
     }
 
+    ///@brief compare a matrix of the same format to this matrix, assumes that the data in each is valid
+    inline bool operator==(const valueMatrix_dense_full<T>& other) const
+    {
+        //Compare all the bits in the data
+        return std::equal(myData.begin(),myData.end(),other.myData.begin());
+    }
 
 };

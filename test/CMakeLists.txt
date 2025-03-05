@@ -10,7 +10,6 @@ file(GLOB getValueAlgorithms "../src/getValue/*.cpp")
 list(REMOVE_ITEM getValueAlgorithms "*constant.cpp")
 
 foreach (valueAlgorithm_file ${getValueAlgorithms})
-
     get_filename_component(valueAlgorithm ${valueAlgorithm_file} NAME_WE)
     add_executable(getValue_${valueAlgorithm}_test)
     target_sources(getValue_${valueAlgorithm}_test PRIVATE getValueTest.cpp ${valueAlgorithm_file})
@@ -18,3 +17,16 @@ foreach (valueAlgorithm_file ${getValueAlgorithms})
 
     add_test(NAME ${valueAlgorithm} COMMAND getValue_${valueAlgorithm}_test)
 endforeach ()
+
+
+add_executable(
+        MatrixTests
+        MatrixTests.cpp
+)
+target_link_libraries(
+        MatrixTests
+        GTest::gtest_main
+)
+
+include(GoogleTest)
+gtest_discover_tests(MatrixTests)

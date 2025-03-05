@@ -8,7 +8,7 @@
 
 #include <vector>
 #include "stateIndices.h"
-#include "valueMatrix8bit_dense_3of4_backformat.h"
+#include "valueMatrix_dense_3of4_backformat.h"
 #include "valueMatrix_dense_full.h"
 
 ///@brief A package which includes a state, and a value matrix, and the known values betwixt these, used for testing

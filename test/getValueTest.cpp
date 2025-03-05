@@ -1,12 +1,14 @@
 /// Test the accuracy of the algorithm supplied on all the test states
+///I did not find a good way of turning this into a google test, so this is a regular return 0 if success test
 
 #include <iostream>
 #include "getValue.h"
 #include "testStates.h"
 #include <string>
 #include "AVX_functions.h"
+
  int main(int argc, char* argv[]) {
-/*
+/* Proplem, this doesn't work on windows, it fails to detect AVX2, even when it is there
      if (getAVXSupport()==0)
      {
          std::cout<<"AVX is not supported"<<std::endl;

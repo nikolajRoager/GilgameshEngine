@@ -706,7 +706,6 @@ void simd_statevector_16bit_mask()
 
 //Uncomment to print every step of the algorithm
 #define VERBOSE
-
     auto Then = std::chrono::high_resolution_clock::now();
     int Repeats = 10000000;
 #ifdef VERBOSE
@@ -718,7 +717,7 @@ void simd_statevector_16bit_mask()
     for (int repeat = 0; repeat<Repeats; ++repeat)
     {
 
-        //First half of the state vector, contains a mask for whether or not player 0 has a piece in position 1 to E, and whether player 1 has a piece at 1 or 2.
+        //First half of the state vector, contains a mask for whether player 0 has a piece in position 1 to E, and whether player 1 has a piece at 1 or 2.
         __m256i first_vec_mask = _mm256_loadu_si256((__m256i*)&V[0]);
         //Second half of the state vector, contains a mask for the last 12 positions on the board of player 1, and the number of unstarted/finished pieces as a 16 bit number
         __m256i second_vec_mask = _mm256_loadu_si256((__m256i*)&V[16]);
@@ -730,7 +729,7 @@ void simd_statevector_16bit_mask()
         //We will add parts of the sum as 16 bit snippets to this register, then sum it up when they are all there
         __m256i sum = _mm256_setzero_si256();//Start empty
 
-        //For every row in the matrix, except the 4 last (which are special as we need to multiply them
+        //For every row in the matrix, except the 4 last (which are special as we need to multiply them)
         for (int i = 0; i < 16; ++i)
         {
             //Equivalent to multiplying with V[i] on the entire row, but much, much faster
