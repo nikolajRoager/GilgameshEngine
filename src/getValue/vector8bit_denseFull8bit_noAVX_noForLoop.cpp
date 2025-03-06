@@ -18,7 +18,7 @@ int32_t getValue(const void* state_ptr,const void* matrix_ptr) {
     const auto *state = static_cast<const int8_t *>(state_ptr);
     const auto *matrix = static_cast<const int8_t *>(matrix_ptr);
 
-    //Yep, I am 100% serious (I wrote a little program to write these lines)
+    //The below code is computer-generated
     if (state[0]) {
         sum += static_cast<int>(matrix[0]) * static_cast<int>(state[0]) * static_cast<int>(state[0]);
         if (state[1])

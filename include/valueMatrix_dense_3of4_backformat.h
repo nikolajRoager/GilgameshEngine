@@ -17,6 +17,7 @@
 
 ///@brief 8 bit dense square matrix of AI values, with the 1/4 all 0 block left out, in "counters-in-the-back" format, please open the valueMatrix_dense_3of4_backformat.h file to see a diagram
 ///@brief Value matrices are from the perspective of player 0, and assumes that it is player 1s turn!
+///@warning it is assumed in the algorithms that the matrices not contain larger numbers than could be stored in an 8-bit version, the larger matrices are only there to speed up calculations, by saving on casting time. UNDEFINED BEHAVIOUR may occur if that is not so
 template<typename T, typename =std::enable_if<std::is_integral_v<T>>>
 class valueMatrix_dense_3of4_backformat
 {

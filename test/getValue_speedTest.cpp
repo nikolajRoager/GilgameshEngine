@@ -56,7 +56,7 @@ int main(int argc, char* argv[]) {
 
     //Kindly also verify that the result is correct (if the result is not correct, the speed-test is meaningless, unless this was some kind of benchmark where the result doesnn't matter
     if (ignoreOutput()) {
-        std::cout<<"Benchmark!"<<std::endl;
+        std::cout<<"Benchmark! (the result is wrong, but that is ok)"<<std::endl;
         return 0;
     }
     for (int i = 0; i < examples.size(); ++i) {

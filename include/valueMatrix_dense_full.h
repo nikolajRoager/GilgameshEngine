@@ -13,6 +13,7 @@
 ///@brief dense square matrix of AI values, full matrix even the blocks which are guaranteed to be 0, in ordered format, weere column and row i 0 to 15 correspond to player 0 having a piece at position i, i from 16 to 31 correspond to player 1 having a piece at position i-16
 ///@brief Value matrices are from the perspective of player 0, and assumes that it is player 1s turn!
 ///@brief int8_t has the advantage that everything can fit in a single avx registry, but AVX2 doesn't support as many 8-bit operations as 16 bit
+///@warning it is assumed in the algorithms that the matrices not contain larger numbers than could be stored in an 8-bit version, the larger matrices are only there to speed up calculations, by saving on casting time. UNDEFINED BEHAVIOUR may occur if that is not so
 template<typename T, typename =std::enable_if<std::is_integral_v<T>>>
 class valueMatrix_dense_full
 {
