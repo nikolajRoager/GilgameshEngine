@@ -1,0 +1,5 @@
+if(EXISTS "/home/nikolaj/CLionProjects/GilgameshEngine/cmake-build-debug/test/MatrixTests[1]_tests.cmake")
+  include("/home/nikolaj/CLionProjects/GilgameshEngine/cmake-build-debug/test/MatrixTests[1]_tests.cmake")
+else()
+  add_test(MatrixTests_NOT_BUILT MatrixTests_NOT_BUILT)
+endif()

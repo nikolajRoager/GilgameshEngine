@@ -1,0 +1,35 @@
+{
+	"bmi-installation" : null,
+	"compiler-frontend-variant" : "GNU",
+	"compiler-id" : "GNU",
+	"compiler-simulate-id" : "",
+	"config" : "Debug",
+	"cxx-modules" : {},
+	"database-info" : null,
+	"dir-cur-bld" : "/home/nikolaj/CLionProjects/GilgameshEngine/cmake-build-debug/test",
+	"dir-cur-src" : "/home/nikolaj/CLionProjects/GilgameshEngine/test",
+	"dir-top-bld" : "/home/nikolaj/CLionProjects/GilgameshEngine/cmake-build-debug",
+	"dir-top-src" : "/home/nikolaj/CLionProjects/GilgameshEngine",
+	"exports" : [],
+	"forward-modules-from-target-dirs" : [],
+	"include-dirs" : 
+	[
+		"/home/nikolaj/CLionProjects/GilgameshEngine/include"
+	],
+	"language" : "CXX",
+	"linked-target-dirs" : [],
+	"module-dir" : "/home/nikolaj/CLionProjects/GilgameshEngine/cmake-build-debug/test/CMakeFiles/getValue_vector16bit_dense3quarter16bit_AVX_mask_speedtest.dir",
+	"sources" : 
+	{
+		"test/CMakeFiles/getValue_vector16bit_dense3quarter16bit_AVX_mask_speedtest.dir/__/src/getValue/vector16bit_dense3quarter16bit_AVX_mask.cpp.o" : 
+		{
+			"language" : "CXX",
+			"source" : "/home/nikolaj/CLionProjects/GilgameshEngine/src/getValue/vector16bit_dense3quarter16bit_AVX_mask.cpp"
+		},
+		"test/CMakeFiles/getValue_vector16bit_dense3quarter16bit_AVX_mask_speedtest.dir/getValue_speedTest.cpp.o" : 
+		{
+			"language" : "CXX",
+			"source" : "/home/nikolaj/CLionProjects/GilgameshEngine/test/getValue_speedTest.cpp"
+		}
+	}
+}
